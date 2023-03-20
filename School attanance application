@@ -1,0 +1,245 @@
+package com.school.attendanceapplication;
+
+import java.util.Map;
+import java.util.Scanner;
+
+public class View {
+	private Controller Controller;
+	private Scanner sc = new Scanner(System.in);
+
+	View() {
+
+		Controller = new Controller(this);
+	}
+
+	public static void main(String[] args) {
+		Controller atan = new Controller();
+		atan.showMenu();
+
+	}
+
+	public void showMenu() {
+
+		Controller Controller = new Controller();
+		Model model = Controller.getModel();
+		System.out.println("press 1 to Login");
+
+		String studentName = sc.next();
+		System.out.print("Enter your id: ");
+		int studentId = sc.nextInt();
+		if (LoginStudent.loginche(studentName, studentId)) {
+			System.out.println("\n-->Welcome school attendance " + "\n --> welcome" + studentName + "<--\n");
+			System.out.println("Thanks for Login.");
+		}
+	}
+
+	public String getAttendanceInput(int studentId) {
+		System.out.print("Enter attendance for student " + studentId + " (P/A): ");
+		String input = sc.nextLine().toUpperCase();
+		return input;
+	}
+
+	public static void InvalidInputMessage() {
+		System.out.println("Invalid input. Enter P for present or A for absent.");
+	}
+
+	public static void AttendanceSummary(int presentCount, int absentCount) {
+		System.out.println("\nAttendance Summary:");
+		System.out.println("Present count: " + presentCount);
+		System.out.println("Absent count: " + absentCount);
+
+	}
+}
+ 
+ 
+ 
+ model
+ 
+ 
+ 
+ 
+ package com.school.attendanceapplication;
+
+public class Model {
+
+	private Controller Controller;
+
+	public Model(Controller Controller) {
+		this.Controller = Controller;
+	}
+
+	private String studentName;
+	private int studentId;
+	private int presentCount;
+	private int absentCount;
+
+	public Model(String studentName, int studentId) {
+		this.studentName = studentName;
+		this.studentId = studentId;
+	}
+
+	public String getstudentName() {
+		return studentName;
+	}
+
+	public int getstudentId() {
+		return studentId;
+	}
+
+	public void presentCount() {
+		int prsentCoun = presentCount++;
+	}
+
+	public void absentCount() {
+		int absentCoun = absentCount++;
+	}
+
+	public int getPresentCount() {
+		return presentCount;
+	}
+
+	public int getAbsentCount() {
+		return absentCount;
+	}
+}
+
+
+
+login page
+
+
+
+
+public class LoginStudent {
+
+	public static boolean loginche(String studentName, int studentId) {
+		boolean canLogin = false;
+		if (studentName.equals("sumathi") && studentId == (101)) {
+			return true;
+		} else if (studentName.equals("Thabathi") && studentId == (102)) {
+			return true;
+		} else if (studentName.equals("Karthi") && studentId == (103)) {
+			return true;
+		} else if (studentName.equals("pavi") && studentId == (104)) {
+			return true;
+		} else if (studentName.equals("Abitha") && studentId == (105)) {
+			return true;
+		}
+		return false;
+    
+   }
+   }
+   
+   
+   
+   controller
+   
+   
+   
+   package com.school.attendanceapplication;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Controller {
+	private Scanner sc = new Scanner(System.in);
+
+	private View view;
+
+	public Controller(View view) {
+		this.view = view;
+
+	}
+
+	private Model model;
+
+	public Controller(Model model) {
+		this.model = model;
+
+	}
+
+	public Controller() {
+		model = new Model("Sumathi", 101);
+		model = new Model("Thabathi", 102);
+		model = new Model("Karthi", 103);
+		model = new Model("pavi", 104);
+		model = new Model("Abitha", 105);
+
+	}
+
+	public Model getModel() {
+		return model;
+	}
+
+	public void showMenu() {
+		Scanner sc = new Scanner(System.in);
+		Controller Controller = new Controller();
+		Model model = Controller.getModel();
+
+		System.out.println("press 1 to Login");
+		int option = sc.nextInt();
+		System.out.println("\n-->Welcome school attendance ");
+		switch (option) {
+		case 1: {
+			System.out.println("Enter teacherName:");
+			String studentName = sc.next();
+			System.out.print("Enter teacherId : ");
+			int studentId = sc.nextInt();
+			if (LoginStudent.loginche(studentName, studentId)) {
+				System.out.println("\n-->Welcome " + studentName + "<--\n");
+				System.out.println("Thanks for Login.");
+				System.out.println();
+			
+				int option1;
+
+				do {
+					System.out.println("2-Enter Attendance");
+					
+					System.out.println("3-Exit \n");
+					System.out.print("Enter Your Option : ");
+					option1 = sc.nextInt();
+					switch (option1) {
+					case 2:
+
+						AttendanceInput();
+						break;
+			
+					case 3:
+						System.out.println("Thank you for using our services....");
+						break;
+					default:
+						System.out.println("Invalid option selected. Please select a valid option.");
+						break;
+					}
+				} while (option1 != 3);
+				System.out.println("*************************************************");
+			} else {
+				System.out.println("\nInvalid Credentials. Please try again!\n");
+			}
+		}
+		}
+	
+}
+	public void AttendanceInput() {
+
+		for (int i = 101; i <= 105; i++) {
+			System.out.print("Enter attendance for student " + i + " (P/A): ");
+			String input = sc.nextLine().toUpperCase();
+
+			if (input.equals("P")) {
+				model.presentCount();
+			} else if (input.equals("A")) {
+				model.absentCount();
+			} else {
+				View.InvalidInputMessage();
+			}
+		}
+
+		 View.AttendanceSummary(model.getPresentCount() , model.getAbsentCount());
+
+	}
+
+}
+
+   
+ 
